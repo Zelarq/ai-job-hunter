@@ -1,0 +1,36 @@
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# Secrets and Credentials (CRITICAL - DO NOT COMMIT)
+.env
+.env.*
+credentials.json
+*.pem
+
+# Python Cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+
+# Databases and Local Data
+data/*.db
+data/new_jobs_*.csv
+downloaded_files/
+
+# Logs
+logs/
+*.log
+
+# Scratch / Temporary
+scratch/
+test_*.py
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

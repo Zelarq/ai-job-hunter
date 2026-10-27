@@ -1,0 +1,155 @@
+# JobHunter Bangalore Career-Page Job Scraper Configuration
+
+app:
+  name: "Bangalore Career-Page Job Scraper"
+  version: "1.0.0"
+  user_agent: "BangaloreCareerScraper/1.0 (+https://github.com/career-scraper)"
+  request_timeout: 15
+  rate_limit_sleep: 1.5
+
+locations:
+  # Bangalore / Bengaluru / Karnataka matches
+  include:
+    - "bangalore"
+    - "bengaluru"
+    - "karnataka"
+    - "blr"
+  
+  # Allow India-wide remote roles
+  allow_remote_india: true
+  remote_keywords:
+    - "remote - india"
+    - "remote, india"
+    - "remote (india)"
+    - "india - remote"
+    - "india, remote"
+    - "remote, in"
+    - "remote in"
+
+  # Strictly exclude foreign remote
+  remote_exclude:
+    - "remote - us"
+    - "remote, us"
+    - "united states"
+    - "remote - uk"
+    - "remote, uk"
+    - "europe"
+    - "canada"
+    - "australia"
+    - "germany"
+    - "singapore"
+
+role_keywords:
+  - "ai"
+  - "ml"
+  - "machine learning"
+  - "data scientist"
+  - "data analyst"
+  - "data analytics"
+  - "data engineer"
+  - "nlp"
+  - "computer vision"
+  - "deep learning"
+  - "llm"
+  - "genai"
+  - "generative ai"
+  - "artificial intelligence"
+  - "business intelligence"
+  - "bi analyst"
+  - "analytics engineer"
+  - "research scientist"
+  - "decision scientist"
+
+fresher_keywords:
+  - "intern"
+  - "internship"
+  - "internships"
+  - "co-op"
+  - "coop"
+  - "trainee"
+  - "graduate"
+  - "associate"
+  - "junior"
+  - "jr"
+  - "entry"
+  - "entry-level"
+  - "entry level"
+  - "fresher"
+  - "freshers"
+  - "new grad"
+  - "new graduate"
+  - "campus"
+  - "0-1"
+  - "0-2"
+  - "0 to 1"
+  - "0 to 2"
+  - "1-2"
+  - "1 to 2"
+  - "early career"
+  - "apprentice"
+  - "student"
+
+# Job title exclusions (senior, mid-level, leadership, or non-technical roles)
+title_exclusions:
+  - "senior"
+  - "sr"
+  - "lead"
+  - "principal"
+  - "staff"
+  - "manager"
+  - "architect"
+  - "director"
+  - "head"
+  - "vp"
+  - "vice president"
+  - "chief"
+  - "expert"
+  - "ii"
+  - "iii"
+  - "iv"
+  - "v"
+  - "level 2"
+  - "level 3"
+  - "level 4"
+  - "level 5"
+  - "mid-level"
+  - "mid level"
+  - "intermediate"
+  - "experienced"
+  - "sales"
+  - "marketing"
+  - "recruiter"
+  - "hr"
+  - "accountant"
+
+experience:
+  # Strictly fresher & entry-level (0-1 or 0-2 years max). Drop anything demanding > 2 years.
+  max_years: 2
+  
+  # If true, only accepts jobs that explicitly contain fresher/intern keywords in the title.
+  # If false, also accepts entry-level titles (e.g. "Data Analyst") that do not demand >2 years.
+  require_explicit_fresher_or_intern: false
+
+  regex_patterns:
+    # 2.5+, 3+, 4+, 5+ years or ranges like 3-5 years
+    - '\b(?:2\.5|[3-9]|\d{2,})\+?\s*(?:to|-)?\s*\d*\s*(?:years?|yrs?)\b'
+    # 2 to 4 years, 2-5 years
+    - '\b(?:2|3)\s*(?:to|-)\s*(?:[4-9]|\d{2,})\s*(?:years?|yrs?)\b'
+    # minimum / at least 2.5 or 3+ years
+    - '\b(?:minimum|at\s+least)\s+(?:2\.5|[3-9]|\d{2,})\s*(?:years?|yrs?)\b'
+    # 3+ years of experience
+    - '\b(?:2\.5|[3-9]|\d{2,})\+?\s*(?:years?|yrs?)\s+of\b'
+    # requires 3+ years
+    - '\brequires?\s+(?:2\.5|[3-9]|\d{2,})\+?\s*(?:years?|yrs?)\b'
+
+storage:
+  db_path: "data/jobs.db"
+  csv_export_dir: "data"
+
+logging:
+  log_file: "logs/run.log"
+  level: "INFO"
+
+email:
+  enabled: true
+  send_even_if_empty: false  # If true, sends a status report even when 0 new jobs are found
